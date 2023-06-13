@@ -34,6 +34,7 @@ from serving import data
 PATCH_SIZE = 512
 LOCATIONS_FILE = "predict-locations.csv"
 MAX_REQUESTS = 20  # default EE request quota
+PREDICT_LOCATION = "Shatin, 22.38289133952846, 114.2071564986315"
 
 # Constants.
 YEARS = [2016, 2017, 2018, 2019, 2020, 2021]
@@ -179,15 +180,27 @@ if __name__ == "__main__":
         type=int,
         help="Limit the number of concurrent requests to Earth Engine.",
     )
+    parser.add_argument(
+        "--predict_location",
+        default=PREDICT_LOCATION,
+        type=int,
+        help="Limit the number of concurrent requests to Earth Engine.",
+    )
     args, beam_args = parser.parse_known_args()
 
     # Load the points of interest from the CSV file.
-    with open(args.locations_file) as f:
-        locations = [
-            Location(row["name"], year, (float(row["lon"]), float(row["lat"])))
-            for row in csv.DictReader(f)
-            for year in YEARS
-        ]
+    # with open(args.locations_file) as f:
+    #     locations = [
+    #         Location(row["name"], year, (float(row["lon"]), float(row["lat"])))
+    #         for row in csv.DictReader(f)
+    #         for year in YEARS
+    #     ]
+    predict_location = args.predict_location.split(",")
+    locations = [
+        Location(predict_location[0], year, (float(predict_location[1]), float(predict_location[2]))) 
+        for year in YEARS
+    ]
+    
 
     if args.framework == "tensorflow":
         run_tensorflow(
