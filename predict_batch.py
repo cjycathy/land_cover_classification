@@ -183,7 +183,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "--predict_location",
         default=PREDICT_LOCATION,
-        type=int,
         help="Limit the number of concurrent requests to Earth Engine.",
     )
     args, beam_args = parser.parse_known_args()
