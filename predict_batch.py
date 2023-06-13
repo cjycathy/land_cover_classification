@@ -37,7 +37,7 @@ MAX_REQUESTS = 20  # default EE request quota
 PREDICT_LOCATION = "Shatin, 22.38289133952846, 114.2071564986315"
 
 # Constants.
-YEARS = [2016, 2017, 2018, 2019, 2020, 2021]
+YEARS = [2012, 2014, 2016, 2018, 2020, 2022]
 
 
 class Location(NamedTuple):
