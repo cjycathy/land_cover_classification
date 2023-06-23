@@ -35,9 +35,7 @@ PATCH_SIZE = 512
 LOCATIONS_FILE = "predict-locations.csv"
 MAX_REQUESTS = 20  # default EE request quota
 PREDICT_LOCATION = "Shatin, 22.38289133952846, 114.2071564986315"
-
-# Constants.
-YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+YEARS = "2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022"
 
 
 class Location(NamedTuple):
@@ -185,6 +183,11 @@ if __name__ == "__main__":
         default=PREDICT_LOCATION,
         help="Limit the number of concurrent requests to Earth Engine.",
     )
+    parser.add_argument(
+        "--predict_years",
+        default=YEARS,
+        help="Limit the number of concurrent requests to Earth Engine.",
+    )
     args, beam_args = parser.parse_known_args()
 
     # Load the points of interest from the CSV file.
@@ -194,10 +197,11 @@ if __name__ == "__main__":
     #         for row in csv.DictReader(f)
     #         for year in YEARS
     #     ]
+    years = args.predict_years.split(",")
     predict_location = args.predict_location.split(",")
     locations = [
         Location(predict_location[0], year, (float(predict_location[1]), float(predict_location[2]))) 
-        for year in YEARS
+        for year in years
     ]
     
 
